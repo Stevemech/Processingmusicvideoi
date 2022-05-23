@@ -10,7 +10,8 @@ int startTime;
 
 
 //The length, in seconds, of each scene of your animation
-float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 5, 1, 1, 1, 6, 1, 2, 1,1,1, 3,4};
+float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 3,4};
+//45
 //Scene1 is buffer scene, scene2 is where it actually starts.
 
 //The transition times will be the times at which one
@@ -196,7 +197,7 @@ void buffer() {
 
 void scene2part1() {
    
-  int gridSize = 80;
+  int gridSize = 100;
 
 for (int x = gridSize; x <= width - gridSize; x += gridSize) {
   for (int y = gridSize; y <= height - gridSize; y += gridSize) {
@@ -241,7 +242,7 @@ for (int x = gridSize; x <= width - gridSize; x += gridSize) {
 
 void scene2part4() {
   background(0,0,0);
-  int gridSize = 100;
+  int gridSize = 120;
 
 for (int x = gridSize; x <= width - gridSize; x += gridSize) {
   for (int y = gridSize; y <= height - gridSize; y += gridSize) {
@@ -256,7 +257,7 @@ for (int x = gridSize; x <= width - gridSize; x += gridSize) {
 
 void scene2part5() {
    background(0,0,0);
-  int gridSize = 80;
+  int gridSize = 100;
 
 for (int x = gridSize; x <= width - gridSize; x += gridSize) {
   for (int y = gridSize; y <= height - gridSize; y += gridSize) {
@@ -410,10 +411,26 @@ void scene7part2() {
   boom.displayAt(0, 0);
 }
 void scene8(){
-  fill(0,255,0);
-  textAlign( CENTER, CENTER );
-  textSize( 35 );
-  text( "this is text", width/2, height - 150 );
+   background(0);
+  translate(width / 2, height / 2);
+  
+  // Orange point light on the right
+  pointLight(150, 100, 0, // Color
+             200, -150, 0); // Position
+
+  // Blue directional light from the left
+  directionalLight(0, 102, 255, // Color
+                   1, 0, 0); // The x-, y-, z-axis direction
+
+  // Yellow spotlight from the front
+  spotLight(255, 255, 109, // Color
+            0, 40, 200, // Position
+            0, -0.5, -0.5, // Direction
+            PI / 2, 2); // Angle, concentration
+  
+  rotateY(map(mouseX, 0, width, 0, PI));
+  rotateX(map(mouseY, 0, height, 0, PI));
+  box(150);
 }
 
 void endScene() {
