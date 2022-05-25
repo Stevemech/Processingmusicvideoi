@@ -87,6 +87,22 @@ void setup() {
   rocks2 = loadImage("rocks2.png");
   plant2 = loadImage("plant2.png");
   sky2 = loadImage("sky2.png");
+ 
+  cloud1.resize(1080, 720);
+  cloud2.resize(1080, 720);
+  cloud3.resize(1080, 720);
+  cloud4.resize(1080, 720);
+  rocks.resize(1080, 720);
+  sky.resize(1080, 720);
+  cloud13.resize(1080, 720);
+  cloud23.resize(1080, 720);
+  ground13.resize(1080, 720);
+  ground23.resize(1080, 720);
+  ground33.resize(1080, 720);
+  rocks2.resize(1080, 720);
+  plant2.resize(1080, 720);
+  sky2.resize(1080, 720);
+  
   
   toxic1 = new SpriteAnimation("toxic","_","png",1, 10,1,1080,720,false);
   boom = new SpriteAnimation("Explosion","_","png",1, 10,1,1080,720,false);
@@ -287,16 +303,10 @@ void calcWave() {
 }
 
 void scene3part1() {
-  rocks.resize(1080, 720);
   image(rocks, 0, 0);
 }
 void scene3part2() {
-  rocks.resize(1080, 720);
-  sky.resize(1080, 720);
-  cloud1.resize(1080, 720);
-  cloud2.resize(1080, 720);
-  cloud3.resize(1080, 720);
-  cloud4.resize(1080, 720);
+ 
   image(sky, 0, 0);
   image(cloud1, 0, 0);
   image(cloud2, 0, 0);
@@ -306,11 +316,6 @@ void scene3part2() {
 }
 void scene3part3() {
    background(0, 0,0);
-  rocks2.resize(1080, 720);
-  plant2.resize(1080, 720);
-  ground13.resize(1080, 720);
-  ground23.resize(1080, 720);
-  ground33.resize(1080, 720);
   image(rocks2, 0, 0);
   image(plant2, 0, 0);
   image(ground13, 0, 0);
@@ -319,14 +324,6 @@ void scene3part3() {
 }
 void scene3part4() {
   background(0, 0,0);
-  rocks2.resize(1080, 720);
-  plant2.resize(1080, 720);
-  ground13.resize(1080, 720);
-  ground23.resize(1080, 720);
-  ground33.resize(1080, 720);
-  cloud13.resize(1080, 720);
-  cloud23.resize(1080, 720);
-  sky2.resize(1080, 720);
   image(sky2, 0, 0);
   image(rocks2, 0, 0);
   image(plant2, 0, 0);
