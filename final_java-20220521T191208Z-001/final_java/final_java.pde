@@ -437,7 +437,7 @@ void endScene() {
   
   fill(255);
   textSize( 200 );
-  text( "The End", width/2, height/2 ); 
+  text( "Toxic", width/2, height/2 ); 
   
   
   fill(255);
