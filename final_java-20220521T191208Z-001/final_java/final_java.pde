@@ -10,7 +10,7 @@ int startTime;
 
 
 //The length, in seconds, of each scene of your animation
-float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 3,4};
+float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 3,100};
 //45
 //Scene1 is buffer scene, scene2 is where it actually starts.
 
@@ -32,6 +32,10 @@ float amplitude = 75.0;  // Height of wave
 float period = 500.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
+float grav = 0.4;
+float len = 50;
+float sw = 10;
+ArrayList<Firework> fireworks = new ArrayList<Firework>();;
 
 PImage cloud1;
 PImage cloud2;
@@ -53,7 +57,7 @@ SpriteAnimation boom;
 void setup() {
   size(1080, 720, P3D);
   noStroke();
-
+   colorMode(HSB, 360, 100, 100, 100);
   
   //Transition times are when we want the scenes to change
   //while times per scene are the lengths of individual scenes
@@ -235,7 +239,7 @@ for (int x = gridSize; x <= width - gridSize; x += gridSize) {
     noStroke();
     fill(255);
     rect(x-1, y-1, 3, 3);
-    stroke(255,0,0, 100);
+    stroke(360, 100, 100,100);
     line(x, y, width/2, height/2);
   }
 }
@@ -250,7 +254,7 @@ for (int x = gridSize; x <= width - gridSize; x += gridSize) {
     noStroke();
     fill(255);
     rect(x-1, y-1, 3, 3);
-    stroke(0,255,0, 100);
+    stroke(240, 100, 100, 100);
     line(x, y, width/2, height/2);
   }
 }
@@ -265,7 +269,7 @@ for (int x = gridSize; x <= width - gridSize; x += gridSize) {
     noStroke();
     fill(255);
     rect(x-1, y-1, 3, 3);
-    stroke(0,0,255, 100);
+    stroke(90, 100, 100, 100);
     line(x, y, width/2, height/2);
   }
 }
@@ -407,27 +411,19 @@ void scene7part2() {
   boom.update();
   boom.displayAt(0, 0);
 }
+
 void scene8(){
-   background(0);
-  translate(width / 2, height / 2);
-  
-  // Orange point light on the right
-  pointLight(150, 100, 0, // Color
-             200, -150, 0); // Position
-
-  // Blue directional light from the left
-  directionalLight(0, 102, 255, // Color
-                   1, 0, 0); // The x-, y-, z-axis direction
-
-  // Yellow spotlight from the front
-  spotLight(255, 255, 109, // Color
-            0, 40, 200, // Position
-            0, -0.5, -0.5, // Direction
-            PI / 2, 2); // Angle, concentration
-  
-  rotateY(map(mouseX, 0, width, 0, PI));
-  rotateX(map(mouseY, 0, height, 0, PI));
-  box(150);
+  background(0,0,0  );
+  noFill();
+  if(random(50) < 1){
+    fireworks.add(new Firework(new PVector(width/2, height), new PVector(random(-4, 4), random(-10, -6))));
+  }
+  for(int i = fireworks.size()-1; i >= 0; i--){
+    Firework firework = fireworks.get(i);  
+    firework.update();
+    firework.show();
+    if(!firework.isAlive())fireworks.remove(i);
+  }
 }
 
 void endScene() {
