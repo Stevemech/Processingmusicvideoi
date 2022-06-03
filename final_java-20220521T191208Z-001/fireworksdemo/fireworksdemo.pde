@@ -28,7 +28,7 @@ void draw(){
 class Firework{
   Spark spark;
   Trail trail = new Trail();
-  float hue = (frameCount/10)%360;
+ float hue = random(360);
   
   Firework(PVector pos, PVector v){
     trail.pos = pos;
@@ -95,7 +95,7 @@ class Trail{
   PVector pos = new PVector();
   PVector v = new PVector();
   ArrayList<PVector> ps = new ArrayList<PVector>();
-  float energy=255;
+  float energy=200;
   float hue;
   
   void update(){
