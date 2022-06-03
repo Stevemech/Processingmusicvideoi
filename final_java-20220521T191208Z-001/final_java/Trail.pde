@@ -2,7 +2,7 @@ class Trail{
   PVector pos = new PVector();
   PVector v = new PVector();
   ArrayList<PVector> ps = new ArrayList<PVector>();
-  float energy=255;
+  float energy=150;
   float hue;
   
   void update(){
