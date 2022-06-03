@@ -10,7 +10,7 @@ int startTime;
 
 
 //The length, in seconds, of each scene of your animation
-float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 3,100};
+float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 2,10,5,1};
 //45
 //Scene1 is buffer scene, scene2 is where it actually starts.
 
@@ -32,7 +32,7 @@ float amplitude = 75.0;  // Height of wave
 float period = 500.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] yvalues;  // Using an array to store height values for the wave
-float grav = 0.4;
+float grav = 0.01;
 float len = 50;
 float sw = 10;
 ArrayList<Firework> fireworks = new ArrayList<Firework>();;
@@ -196,6 +196,12 @@ void draw() {
   }
   else if( now - startTime < transitionTimes[22] * 1000 ) {
     scene8(); 
+  }
+  else if( now - startTime < transitionTimes[23] * 1000 ) {
+    buffer(); 
+  }
+  else if( now - startTime < transitionTimes[24] * 1000 ) {
+    scene8part2(); 
   }
   
   else {
@@ -414,6 +420,22 @@ void scene7part2() {
 
 void scene8(){
   background(0,0,0  );
+  noFill();
+  if(random(50) < 1){
+    fireworks.add(new Firework(new PVector(width/2, height), new PVector(random(-4, 4), random(-10, -6))));
+  }
+  for(int i = fireworks.size()-1; i >= 0; i--){
+    Firework firework = fireworks.get(i);  
+    firework.update();
+    firework.show();
+    if(!firework.isAlive())fireworks.remove(i);
+  }
+}
+
+void scene8part2(){
+  background(0,0,0);
+  len = 80;
+ sw = 40;
   noFill();
   if(random(50) < 1){
     fireworks.add(new Firework(new PVector(width/2, height), new PVector(random(-4, 4), random(-10, -6))));
