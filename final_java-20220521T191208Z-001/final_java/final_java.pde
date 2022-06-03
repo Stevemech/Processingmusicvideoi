@@ -10,7 +10,7 @@ int startTime;
 
 
 //The length, in seconds, of each scene of your animation
-float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 4, 1, 1, 1, 6, 1, 2, 1,1,1, 2,10,5,1};
+float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 5, 1, 1, 1, 6, 1, 2, 1,1,1, 2,10,5,3,100};
 //45
 //Scene1 is buffer scene, scene2 is where it actually starts.
 
@@ -54,6 +54,8 @@ PImage sky2;
 float angleRotate = 0.0;
 SpriteAnimation toxic1;
 SpriteAnimation boom;
+
+ArrayList<ParticleSystem> systems;
 void setup() {
   size(1080, 720, P3D);
   noStroke();
@@ -110,6 +112,11 @@ void setup() {
   
   toxic1 = new SpriteAnimation("toxic","_","png",1, 10,1,1080,720,false);
   boom = new SpriteAnimation("Explosion","_","png",1, 10,1,1080,720,false);
+  
+  systems = new ArrayList<ParticleSystem>();
+  for (int i=0; i<=50; i++){
+   systems.add(new ParticleSystem(1, new PVector(random(1000),random(700))));
+  }
 }
 
 void draw() {
@@ -202,6 +209,9 @@ void draw() {
   }
   else if( now - startTime < transitionTimes[24] * 1000 ) {
     scene8part2(); 
+  }
+  else if( now - startTime < transitionTimes[25] * 1000 ) {
+    test(); 
   }
   
   else {
@@ -346,10 +356,6 @@ void scene3part4() {
 
 void buffer3(){
   background(0,0,0);
-  // Create the font from the .ttf file in the data folder
-  //String[] fontList = PFont.list();
-  //printArray(fontList);
-
 }
 
 void scene4() {
@@ -359,7 +365,7 @@ void scene4() {
   pushMatrix();
   translate(540,360);
   rotate(radians(angleRotate));
-  fill(251,72,196);
+  fill(350, 25, 100);
   tint(255, 127);
   text("Yeah", 0, 0);
   popMatrix();
@@ -372,7 +378,7 @@ void scene5() {
   background(0,0,0);
   textFont(createFont("Georgia Bold", 36));
   textSize(100);
-  fill(255, 165, 0);
+  fill(39, 100, 100);
   tint(255, 127);
   textAlign( CENTER, CENTER );
   text("Can't Help Myself", width/2, height/2);
@@ -382,7 +388,7 @@ void scene5part2() {
   background(0,0,0);
   textFont(createFont("Georgia Bold", 36));
   textSize(100);
-  fill(173,216,230);
+  fill(184, 93, 85);
   tint(255, 127);
   textAlign( CENTER, CENTER );
   text("Can't Help Myself",  width/2, height/2);
@@ -391,7 +397,7 @@ void scene6() {
   background(0,0,0);
   textFont(createFont("Georgia Bold", 36));
   textSize(100);
-  fill(0,255,0);
+  fill(266, 60, 88);
   tint(255, 127);
   textAlign( CENTER, CENTER );
   text("I Need Some Help",  width/2, height/2);
@@ -401,7 +407,7 @@ void scene6part2() {
   background(0,0,0);
   textFont(createFont("Georgia Bold", 36));
   textSize(100);
-  fill(203, 195, 227);
+  fill(116, 78, 85);
   tint(255, 127);
   textAlign( CENTER, CENTER );
   text("I Need Some Help",  width/2, height/2);
@@ -419,7 +425,7 @@ void scene7part2() {
 }
 
 void scene8(){
-  background(0,0,0  );
+  background(0,0,0);
   noFill();
   if(random(50) < 1){
     fireworks.add(new Firework(new PVector(width/2, height), new PVector(random(-4, 4), random(-10, -6))));
@@ -448,6 +454,13 @@ void scene8part2(){
   }
 }
 
+void test() {
+   background(0);
+  for (ParticleSystem ps : systems) {
+    ps.run();
+    ps.addParticle();
+  }
+}
 void endScene() {
   //Use x and y for text as center of text block
   background(0,0,0);
