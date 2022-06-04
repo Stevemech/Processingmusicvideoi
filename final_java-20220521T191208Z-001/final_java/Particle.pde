@@ -3,7 +3,7 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   float lifespan;
-  int h,s,b;
+  int h;
   
   Particle(PVector l) {
     acceleration = new PVector(0, 0.05);
@@ -28,11 +28,9 @@ class Particle {
   void display() {
     
      h = (int)random(360);
-     s= (int)random(100);
-     b= (int)random(100);
-    stroke(h,s,b,lifespan);
+    stroke(h,100,100,lifespan);
     strokeWeight(4);
-    fill(h,s,b,lifespan);
+    fill(h,100,100,lifespan);
     ellipse(position.x, position.y, 3, 3);
   }
 

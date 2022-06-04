@@ -10,7 +10,31 @@ int startTime;
 
 
 //The length, in seconds, of each scene of your animation
-float[] timesPerScene = {8, 4, 1, 1, 1, 2, 4, 1, 1, 1, 1, 5, 1, 1, 1, 6, 1, 2, 1,1,1, 2,10,5,3,100};
+float[] timesPerScene = {7, //0
+                         5, //1
+                         1, //2
+                         1, //3
+                         1, //4
+                         2, //5
+                         4, //6
+                         1, //7
+                         1, //8
+                         1, //9
+                         1, //10
+                         4, //11
+                         2, //12
+                         1, //13
+                         1, //14
+                         3, //15
+                         3, //16
+                         2, //17
+                         2,//18
+                         1,//19
+                         1, //20
+                         2,//21
+                         15,//22
+                         0,//23
+                         3};//24
 //45
 //Scene1 is buffer scene, scene2 is where it actually starts.
 
@@ -56,6 +80,13 @@ SpriteAnimation toxic1;
 SpriteAnimation boom;
 
 ArrayList<ParticleSystem> systems;
+
+int count = 100;
+ 
+float[] x = new float[count];
+float[] y = new float[count];
+float[] h = new float[count];
+ 
 void setup() {
   size(1080, 720, P3D);
   noStroke();
@@ -117,6 +148,11 @@ void setup() {
   for (int i=0; i<=50; i++){
    systems.add(new ParticleSystem(1, new PVector(random(1000),random(700))));
   }
+   for (int k = 0; k < count; k++) {
+    x[k] = random(width);
+    y[k] = random(height);
+    h[k] = random(360);
+  }
 }
 
 void draw() {
@@ -136,6 +172,7 @@ void draw() {
   if( now - startTime < transitionTimes[0] * 1000 ) {
     buffer(); 
   }
+  
   else if( now - startTime < transitionTimes[1] * 1000 ) {
     scene2part1(); 
   } 
@@ -209,13 +246,9 @@ void draw() {
   }
   else if( now - startTime < transitionTimes[24] * 1000 ) {
     scene8part2(); 
-  }
-  else if( now - startTime < transitionTimes[25] * 1000 ) {
-    test(); 
-  }
-  
+    background(0);
+  } 
   else {
-    background(242, 142, 221);
     endScene();
   }
 }
@@ -394,23 +427,45 @@ void scene5part2() {
   text("Can't Help Myself",  width/2, height/2);
 }
 void scene6() {
-  background(0,0,0);
-  textFont(createFont("Georgia Bold", 36));
-  textSize(100);
-  fill(266, 60, 88);
-  tint(255, 127);
-  textAlign( CENTER, CENTER );
-  text("I Need Some Help",  width/2, height/2);
+  float heartSize = random(10, 100);
+  float heartX = random(width);
+  float heartBottomY = random(height+heartSize);
+
+  float h = random(360);
+
+  fill(h, 100,100);
+  stroke(h, 100,100);
+
+  //fill in line that sometimes appears between halves
+  line(heartX, heartBottomY, heartX, heartBottomY-heartSize*.75);
+
+  //left half of heart
+  beginShape();
+  curveVertex(heartX, heartBottomY+heartSize); //anchor point
+  curveVertex(heartX, heartBottomY); //bottom tip
+  curveVertex(heartX - heartSize/2, heartBottomY-heartSize/1.5); //left edge
+  curveVertex(heartX - heartSize/3, heartBottomY-heartSize); //top of left edge
+  curveVertex(heartX, heartBottomY-heartSize*.75); //top middle dip
+  curveVertex(heartX, heartBottomY); //guiding point
+  endShape();
+
+  //right half of heart
+  beginShape();
+  curveVertex(heartX, heartBottomY);
+  curveVertex(heartX, heartBottomY-heartSize*.75);
+  curveVertex(heartX + heartSize/3, heartBottomY-heartSize);
+  curveVertex(heartX + heartSize/2, heartBottomY-heartSize/1.5);
+  curveVertex(heartX, heartBottomY);
+  curveVertex(heartX, heartBottomY + heartSize);
+  endShape();
 }
 
 void scene6part2() {
-  background(0,0,0);
-  textFont(createFont("Georgia Bold", 36));
-  textSize(100);
-  fill(116, 78, 85);
-  tint(255, 127);
-  textAlign( CENTER, CENTER );
-  text("I Need Some Help",  width/2, height/2);
+  background(0);
+  for (ParticleSystem ps : systems) {
+    ps.run();
+    ps.addParticle();
+  }
 }
 void scene7() {
   background(0,0,0);
@@ -454,24 +509,38 @@ void scene8part2(){
   }
 }
 
-void test() {
-   background(0);
-  for (ParticleSystem ps : systems) {
-    ps.run();
-    ps.addParticle();
-  }
-}
 void endScene() {
+  for(int i = 0; i < count; i++){
+    x[i] += random(0, 10);
+    y[i] += random(0, 10);
+   
+    if(x[i] < 0){
+     x[i] = width;
+    }
+    if(x[i] > width){
+      x[i] = 0;
+    }
+   
+    if(y[i] < 0){
+      y[i] = height;
+    }
+    if(y[i] > height){
+     y[i] = 0;
+    }
+
+    stroke(h[i],100,100);
+    strokeWeight(3);
+    point(x[i], y[i]);
+   
+  }
   //Use x and y for text as center of text block
-  background(0,0,0);
   textAlign( CENTER, CENTER );
   
-  fill(255);
+ fill(0,0,100);
   textSize( 200 );
   text( "Toxic", width/2, height/2 ); 
   
-  
-  fill(255);
+    fill(0,0,100);
   textSize( 35 );
   text( "Toxic by Steve Zhang", width/2, height - 150 );
 }
